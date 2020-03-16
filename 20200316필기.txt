@@ -1,0 +1,29 @@
+root폴더에 package.json 생성
+{
+    "name": "reactstudy",
+    "version": "1.0.0",
+    "scripts": {
+        //클라이언트 폴더로 가서 리액스 서버 실행
+        "client":"cd client && yarn start",
+        //서버.js 실행시킴
+        "server":"ndoemon server.js",
+        // 개발환경에서는 서버와 클라이언트 실행- > react와 nodejs가 두개다 실행되게 함
+        "dev":"concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    },
+    "dependencies": {
+        "body-parser": "1.19.0",
+        "express": "4.17.1"
+    },
+    "devDependencies": {
+        "concurrently": "5.1.0"
+    }
+
+}
+
+// npm install -g nodemon 설치  -> 오류 -> 해결
+package.json 작성후 
+$  npm install   혹은 npm i  => 이 과정이 빠졌네요.
+dependencies 작성후 패키지 설치를 하지 않아서 비디오 그대로하면 에러가 날듯합니다.
+대부분 강좌에서 npm install nodemon body-parser express  
+방법을 이용하는데 package.json을 먼저 작성하는게 처음 접하는 분들에겐 더 어렵게 느껴지지 않을까.. 하는게 제 생각입니다.
+
