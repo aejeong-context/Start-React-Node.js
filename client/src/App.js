@@ -18,29 +18,27 @@ const styles = theme =>({
   table:{
     minWidth:1080
   }
-})
-
-const customers = [
-  {
-  'id':1,
-  'image':'https://placeimg.com/64/64/3',
-  'name':'신애정',
-  'birthday':'940605',
-  'gender':'여자',
-  'job':'무직'
-},
-{
-  'id':2,
-  'image':'https://placeimg.com/64/64/2',
-  'name':'양지수',
-  'birthday':'960910',
-  'gender':'남자',
-  'job':'무직'
-}
-
-]
+});
 
 class App extends Component {
+
+  state = {
+    customers:""
+  }
+  //모든 컨포넌트가 마운트가 완료되었을때 실행되는 부분
+  componentDidMount(){
+    this.callApi()
+    .then(res => this.setState({customers:res}))
+    .catch(err=>console.log(err));
+
+  }
+  callApi = async()=>{
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
+
   render() {
     const {classes}=this.props;
     return(
@@ -57,11 +55,10 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-   {//App 반복문
-    //map을 이용해 반복문을 사용하여 다수의 정보를 출력할때는 key라는 props를 사용해줘야 한다.
-     customers.map(c=>{
+   {this.state.customers?this.state.customers.map(c=>{
        return (
-       <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />);})}
+       <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>);
+      }):""}
           </TableBody>
       </Table>
     </Paper>
