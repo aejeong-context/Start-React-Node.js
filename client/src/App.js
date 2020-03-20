@@ -7,6 +7,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+//api로딩 메시지를 위한 라이브러리
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = theme =>({
@@ -17,16 +19,22 @@ const styles = theme =>({
   },
   table:{
     minWidth:1080
+  },
+  progress:{
+    margin:theme.spacing.unit * 2
   }
 });
 
 class App extends Component {
 
   state = {
-    customers:""
+    customers:"",
+    completed:0
   }
   //모든 컨포넌트가 마운트가 완료되었을때 실행되는 부분
   componentDidMount(){
+    //0.02초마다 프로그래스 함수가 실행될 수 있도록 timer 설정
+    this.timer=setInterval(this.progress,20);
     this.callApi()
     .then(res => this.setState({customers:res}))
     .catch(err=>console.log(err));
@@ -36,6 +44,10 @@ class App extends Component {
     const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
+  }
+  progress = ()=>{
+    const {completed} = this.state;
+    this.setState({completed:completed>=100?0:completed+1});
   }
 
 
@@ -58,7 +70,15 @@ class App extends Component {
    {this.state.customers?this.state.customers.map(c=>{
        return (
        <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job}/>);
-      }):""}
+      }):
+      <TableRow>
+        <TableCell colSpan="6" align="center">
+          <CircularProgress className = {classes.progress} variant ="determinate" value={this.state.completed}/>
+
+
+        </TableCell>
+      </TableRow>
+      }
           </TableBody>
       </Table>
     </Paper>
