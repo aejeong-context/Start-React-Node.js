@@ -68,10 +68,15 @@ utf-8 설정하기
 HeidiSQL 설치
 aws에서 보안 설정 하기
 HeidiSQL에서 테이블 생성, 확인
-gitignore에서 database정보 입력하기
+gitignore에서 database정보 입력하기(필수 / aws 계정 공개되면 요금 폭탄위험!)
 database.json 에서 데이터 베이스 정보 입력
 
 npm install --save mysql 로 mysql 설치
 
 server.js 수정하기 
-- 
+
+
+//20200323 필기
+
+//axios는 node.js와 브라우저를 위한 http통신 javascript 라이브러리
+npm install --save axios

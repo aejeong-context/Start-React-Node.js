@@ -13,7 +13,6 @@ class Customer extends React.Component{
                 <TableCell><img src={this.props.image} alt="profile"/></TableCell>
                 <TableCell>{this.props.name}</TableCell>
                 <TableCell>{this.props.birthday}</TableCell>
-                <TableCell>{this.props.gender}</TableCell>
                 <TableCell>{this.props.job}</TableCell>
             </TableRow>
             //div가 꼭 있어야 함.
