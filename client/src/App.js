@@ -28,10 +28,27 @@ const styles = theme =>({
 
 class App extends Component {
 
-  state = {
-    customers:"",
-    completed:0
+  constructor(props){
+    super(props);
+    this.state={
+      customers:'',
+      completed:0
+    }
   }
+
+  stateRefresh=()=>{
+    this.setState({
+      customers:'',
+      completed:0
+    });
+    this.callApi()
+    .then(res => this.setState({customers:res}))
+    .catch(err=>console.log(err));
+  }
+  // state = {
+  //   customers:"",
+  //   completed:0
+  // }
   //모든 컨포넌트가 마운트가 완료되었을때 실행되는 부분
   componentDidMount(){
     //0.02초마다 프로그래스 함수가 실행될 수 있도록 timer 설정
@@ -84,7 +101,7 @@ class App extends Component {
             </TableBody>
         </Table>
       </Paper>
-      <CustomerAdd/>
+      <CustomerAdd stateRefresh={this.stateRefresh}/>
     </div>
     );
   }
