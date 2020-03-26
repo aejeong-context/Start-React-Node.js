@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-
+import CustomerDelete from './CustomerDelete';
 class Customer extends React.Component{
     //항상 수행되는 내용 
     //실제 그려지는 내용
@@ -14,6 +14,7 @@ class Customer extends React.Component{
                 <TableCell>{this.props.name}</TableCell>
                 <TableCell>{this.props.birthday}</TableCell>
                 <TableCell>{this.props.job}</TableCell>
+                <TableCell><CustomerDelete stateRefresh={this.props.stateRefresh} id={this.props.id}/></TableCell>
             </TableRow>
             //div가 꼭 있어야 함.
             // <div>
