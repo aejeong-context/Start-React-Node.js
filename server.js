@@ -27,7 +27,7 @@ const upload = multer({dest:'./upload'});
 
 app.get('/api/customers',(req,res)=>{
   connection.query(
-    "SELECT * FROM CUSTOMER",
+    "SELECT * FROM CUSTOMER WHERE isDELETED = 0 ",
         (err,rows,fields)=>{
           //배열형태로 가지고온다
           //fields - 결과값 화면 출력 
@@ -36,10 +36,19 @@ app.get('/api/customers',(req,res)=>{
       
       );
 });
+
+app.delete('/api/costomers/:id',(req,res)=>{
+  let sql = 'UPADTE CUSTOMER SET isDeleted = 1 WHERE id =?';
+  let params = [req.params.id];
+  connection.query(sql,params,(err,rows,fields)=>{
+    res.send(rows);
+  })
+});
+
 //이미지 폴더로 접근 실제 경로는 upload
 app.use('/image',express.static('./upload'));
 app.post('/api/customers',upload.single('image'),(req,res)=>{
-  let sql = 'INSERT INTO CUSTOMER VALUES(null,?,?,?,?)';
+  let sql = 'INSERT INTO CUSTOMER VALUES(null,?,?,?,?,now(),0)';
   let image = '/image/'+req.file.filename;
   let name = req.body.name;
   let birthday = req.body.birthday;
