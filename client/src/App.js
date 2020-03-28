@@ -27,14 +27,23 @@ import SearchIcon from '@material-ui/icons/Search';
 const styles = theme =>({
   root:{
     width:'100%',
-    marginTop:theme.spacing.unit *3,
-    overflowX:"auto"
-  },
-  table:{
     minWidth:1080
-  },
+ },
+ menu:{
+    marginTop:15,
+    marginBottom:15,
+    display:'flex',
+    justifyContent:'center'
+ },
+ paper:{
+    marginLeft:18,
+    marginRight:18
+ },
   progress:{
     margin:theme.spacing.unit * 2
+  },
+  TableHead:{
+      fontSize:'1.0rem'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -133,6 +142,7 @@ class App extends Component {
 
   render() {
     const {classes}=this.props;
+    const cellList = ["번호","프로필 이미지","이름","생년월일","직업","설정"];
     return(
       <div className={classes.root}>
         <AppBar position="static">
@@ -163,17 +173,16 @@ class App extends Component {
           </div>
         </Toolbar>
       </AppBar>
-        <Paper>
+      <div className={classes.menuButton}>
+      <CustomerAdd stateRefresh={this.stateRefresh}/>
+      </div>
+        <Paper className={classes.paper}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-              <TableCell>번호</TableCell>
-              <TableCell>이미지</TableCell>
-              <TableCell>이름</TableCell>
-              <TableCell>생년월일</TableCell>
-              <TableCell>성별</TableCell>
-              <TableCell>직업</TableCell>
-              <TableCell>설정</TableCell>
+              {cellList.map(c=>{
+                return <TableCell className={classes.TableHead}>{c}</TableCell>
+              })}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -192,7 +201,7 @@ class App extends Component {
             </TableBody>
         </Table>
       </Paper>
-      <CustomerAdd stateRefresh={this.stateRefresh}/>
+      
     </div>
     );
   }
